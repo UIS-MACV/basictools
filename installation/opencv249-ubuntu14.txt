@@ -31,3 +31,28 @@ sudo make install
 
 #configuration (since the machine hosts Ubuntu 14.04, there must exist gedit)
 sudo gedit /etc/ld.so.conf.d/opencv.conf
+
+#********IMPORTANT***************************************
+#add this line of code to the file, then save and close
+
+/usr/local/lib
+
+#********************************************************
+
+#adding the new configuration to console
+sudo ldconfig
+
+#editing the path
+sudo gedit /etc/bash.bashrc
+
+
+#********IMPORTANT***************************************************
+#add these lines of code to the END of the file, then save and close
+
+PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig
+export PKG_CONFIG_PATH
+
+#********************************************************************
+
+#That's all
+#Close the console, and restart the computer
