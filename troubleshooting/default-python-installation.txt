@@ -1,1 +1,31 @@
 
+#tool: python
+#version: 2.x, 3.x
+#OS: (linux)
+
+#subject: how can I find the default python installation binary?, command 'python' will enter anaconda's python
+#user@host:~$ python
+#Python 3.6.5 |Anaconda, Inc.| (default, Apr 29 2018, 16:14:56) 
+#[GCC 7.2.0] on linux
+#Type "help", "copyright", "credits" or "license" for more information.
+#>>> 
+
+#reason: Actually this is not an error/trouble. When anaconda is installed, the default python path is overwritten.
+
+#solution: default python installation can still be found on:  /usr/bin/python   |   /usr/bin/python3
+#When issuing this command, an output similar to this should appear:
+
+user@host:~$ /usr/bin/python
+Python 2.7.6 (default, Nov 23 2017, 15:49:48) 
+[GCC 4.8.4] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+>>> 
+
+#or
+
+user@host:~$ /usr/bin/python3
+Python 3.4.3 (default, Nov 28 2017, 16:41:13) 
+[GCC 4.8.4] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> 
+
