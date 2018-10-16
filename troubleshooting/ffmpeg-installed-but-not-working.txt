@@ -4,12 +4,18 @@
 
 #subject: ffmpeg package is already installed but it shows the following error when invoked:
 user@host:~$ ffmpeg
+
 ffmpeg: error while loading shared libraries: libx264.so.138: cannot open shared object file: No such file or directory
 
 #possible-reasons: sometimes the "ppa:mc3man/trusty-media" repository presents errors and default installation stops working.
 
 #solution01: there's a binary file "ffmpeg" placed at /usr/bin/ that seems to work.
-#If that's your case, the following output should appear when you issue this command:    /usr/bin/ffmpeg
+#To check if that's your case, issue this command in a terminal:
+
+/usr/bin/ffmpeg
+
+#an output similar to this should appear:
+
 user@host:~$ /usr/bin/ffmpeg 
 ffmpeg version 3.4 Copyright (c) 2000-2017 the FFmpeg developers
   built with gcc 4.8 (Ubuntu 4.8.4-2ubuntu1~14.04.4)
