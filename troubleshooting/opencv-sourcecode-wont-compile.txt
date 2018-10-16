@@ -1,0 +1,18 @@
+
+#tool: opencv, c++ (cpp)
+#version: all
+#OS: (linux)
+
+#subject: opencv sourcecode won't compile when generating a c++ (cpp) binary:
+#user@host:~$ g++ sourcecode.cpp -o binary
+#(error output)
+
+#reason: when working with c++ source code, the compiler needs to know where to find opencv libraries.
+
+#solution: A directive must be added to the compilation line, indicating where to find opencv libraries.
+#The following line must be added:   `pkg-config --cflags --libs opencv`
+
+#an output similar to this should appear:
+
+user@host:~$ g++ sourcecode.cpp -o binary `pkg-config --cflags --libs opencv`
+user@host:~$
