@@ -1,0 +1,29 @@
+#tool: ffmpeg
+#version: all
+#OS: Ubuntu 14.04
+
+#subject: ffmpeg package is already installed but it shows the following error when invoked:
+user@host:~$ ffmpeg
+ffmpeg: error while loading shared libraries: libx264.so.138: cannot open shared object file: No such file or directory
+
+#possible-reasons: sometimes the "ppa:mc3man/trusty-media" repository presents errors and default installation stops working.
+
+#solution01: there's a binary file "ffmpeg" placed at /usr/bin/ that seems to work.
+#If that's your case, the following output should appear when you issue this command:    /usr/bin/ffmpeg
+user@host:~$ /usr/bin/ffmpeg 
+ffmpeg version 3.4 Copyright (c) 2000-2017 the FFmpeg developers
+  built with gcc 4.8 (Ubuntu 4.8.4-2ubuntu1~14.04.4)
+  configuration: --extra-libs=-ldl --prefix=/opt/ffmpeg --mandir=/usr/share/man --enable-avresample --disable-debug --enable-nonfree --enable-gpl --enable-version3 --enable-libopencore-amrnb --enable-libopencore-amrwb --disable-decoder=amrnb --disable-decoder=amrwb --enable-libpulse --enable-libfreetype --enable-gnutls --disable-ffserver --enable-libx264 --enable-libx265 --enable-libfdk-aac --enable-libvorbis --enable-libtheora --enable-libmp3lame --enable-libopus --enable-libvpx --enable-libspeex --enable-libass --enable-avisynth --enable-libsoxr --enable-libxvid --enable-libvidstab --enable-libwavpack --enable-nvenc --enable-libzimg
+  libavutil      55. 78.100 / 55. 78.100
+  libavcodec     57.107.100 / 57.107.100
+  libavformat    57. 83.100 / 57. 83.100
+  libavdevice    57. 10.100 / 57. 10.100
+  libavfilter     6.107.100 /  6.107.100
+  libavresample   3.  7.  0 /  3.  7.  0
+  libswscale      4.  8.100 /  4.  8.100
+  libswresample   2.  9.100 /  2.  9.100
+  libpostproc    54.  7.100 / 54.  7.100
+Hyper fast Audio and Video encoder
+usage: ffmpeg [options] [[infile options] -i infile]... {[outfile options] outfile}...
+
+Use -h to get full help or, even better, run 'man ffmpeg'
