@@ -1,0 +1,195 @@
+--------------------------------------------------------------------------
+---------------------  install opencv -----------------------------------------------------
+-- @fmartinezc: test in ubuntu 16 and simplicity with ubuntu 16
+------------------------------------------------------------------------
+
+
+sudo apt-get update
+sudo apt-get upgrade
+
+
+# if not working, test package by package 
+
+sudo apt-get install build-essential libgtk2.0-dev libjpeg-dev libtiff5-dev libjasper-dev libopenexr-dev cmake python-dev python-numpy python-tk libtbb-dev libeigen3-dev yasm libfaac-dev libopencore-amrnb-dev libopencore-amrwb-dev libtheora-dev libvorbis-dev libxvidcore-dev libx264-dev libqt4-dev libqt4-opengl-dev sphinx-common texlive-latex-extra libv4l-dev libdc1394-22-dev libavcodec-dev libavformat-dev libswscale-dev default-jdk ant libvtk5-qt4-dev
+
+
+# This is original source, if not working search by google
+wget http://sourceforge.net/projects/opencvlibrary/files/opencv-unix/2.4.9/opencv-2.4.9.zip
+unzip opencv-2.4.9.zip
+cd opencv-2.4.9
+
+# create a new folder to preparate the 
+mkdir build
+cd build
+
+
+# mypath/opencv-2.4.9/cmake/FindCUDA.cmake
+
+nano ../cmake/FindCUDA.cmake
+
+
+# search (ctlr + W) in nano: 
+
+find_cuda_helper_libs(nppi)
+
+# and replace by
+
+find_cuda_helper_libs(nppial)
+find_cuda_helper_libs(nppicc)
+find_cuda_helper_libs(nppicom)
+find_cuda_helper_libs(nppidei)
+find_cuda_helper_libs(nppif)
+find_cuda_helper_libs(nppig)
+find_cuda_helper_libs(nppim)
+find_cuda_helper_libs(nppist)
+find_cuda_helper_libs(nppisu)
+find_cuda_helper_libs(nppitc)
+
+# save in nano (ctlr+O)
+# search (ctlr + W) in nano: 
+
+set(CUDA_npp_LIBRARY "${CUDA_nppc_LIBRARY};${CUDA_nppi_LIBRARY};${CUDA_npps_LIBRARY}")
+
+# and replace by
+
+set(CUDA_npp_LIBRARY "${CUDA_nppc_LIBRARY};${CUDA_nppial_LIBRARY};${CUDA_nppicc_LIBRARY};${CUDA_nppicom_LIBRARY};${CUDA_nppidei_LIBRARY};${CUDA_nppif_LIBRARY};${CUDA_nppig_LIBRARY};${CUDA_nppim_LIBRARY};${CUDA_nppist_LIBRARY};${CUDA_nppisu_LIBRARY};${CUDA_nppitc_LIBRARY};${CUDA_npps_LIBRARY}")
+
+# save in nano (ctlr+O)
+# search (ctlr + W) in nano: 
+
+unset(CUDA_nppi_LIBRARY CACHE)
+
+# and replace by
+
+unset(CUDA_nppial_LIBRARY CACHE)
+unset(CUDA_nppicc_LIBRARY CACHE)
+unset(CUDA_nppicom_LIBRARY CACHE)
+unset(CUDA_nppidei_LIBRARY CACHE)
+unset(CUDA_nppif_LIBRARY CACHE)
+unset(CUDA_nppig_LIBRARY CACHE)
+unset(CUDA_nppim_LIBRARY CACHE)
+unset(CUDA_nppist_LIBRARY CACHE)
+unset(CUDA_nppisu_LIBRARY CACHE)
+unset(CUDA_nppitc_LIBRARY CACHE)
+
+
+# save in nano (ctlr+O)
+# search (ctlr + W) in nano: 
+
+set(nvcc_flags "")
+
+# and replace by
+
+set(nvcc_flags "--expt-relaxed-constexpr")
+
+# save in nano (ctlr+O)
+# save in nano (ctlr+O)
+# save in nano (ctlr+O)
+# Close and exit (ctlr+X)
+
+
+# Open the file: mypath/opencv-2.4.9/cmake/OpenCVDetectCUDA.cmake
+# and replace several lines, as follows: 
+
+nano ../cmake/OpenCVDetectCUDA.cmake
+
+
+# find segment of line: 
+
+set(_generations "Fermi" 
+
+
+# and replace by
+
+set(_generations "Fermi" "Kepler" "Maxwell" "Pascal" "Volta")
+
+
+# find segment of code that start by: 
+
+set(__cuda_arch_ptx "")
+
+# and end in: 
+ ... STREQUAL "Auto")
+
+# and replace by:
+
+set(__cuda_arch_ptx "")
+  if(CUDA_GENERATION STREQUAL "Fermi")
+    set(__cuda_arch_bin "2.0")
+  elseif(CUDA_GENERATION STREQUAL "Kepler")
+    set(__cuda_arch_bin "3.0 3.5 3.7")
+  elseif(CUDA_GENERATION STREQUAL "Maxwell")
+    set(__cuda_arch_bin "5.0 5.2")
+  elseif(CUDA_GENERATION STREQUAL "Pascal")
+    set(__cuda_arch_bin "6.0 6.1")
+  elseif(CUDA_GENERATION STREQUAL "Volta")
+    set(__cuda_arch_bin "7.0")
+  elseif(CUDA_GENERATION STREQUAL "Auto")
+    ... # no modification
+
+
+# save in nano (ctlr+O)
+# save in nano (ctlr+O)
+# save in nano (ctlr+O)
+# Close and exit (ctlr+X)
+# OPEN the file mypath/opencv2.4. .../modules/gpu/src/graphcuts.cpp and 
+# nano /modules/gpu/src/graphcuts.cpp
+
+# find the line: 
+
+
+#if !defined (HAVE_CUDA) || defined (CUDA_DISABLER)
+
+
+#and replace with:
+
+#if !defined (HAVE_CUDA) || defined (CUDA_DISABLER) || (CUDART_VERSION >= 8000)
+
+
+
+# Replace the file  NCVPixelOperations.hpp (https://drive.google.com/file/d/1P0d-ZbGRw3ncq-0TxueoI-RDGDeTqvIp/view) and replace the original one, as
+# I download this file and is attached to this file if in the web is not available
+
+mv ~/..donde este el nuevo ../NCVPixelOperations.hpp opencv-2.4.9/modules/gpu/src/nvidia/core/NCVPixelOperations.hpp
+
+
+
+# To do make
+cmake -D WITH_TBB=ON -D BUILD_NEW_PYTHON_SUPPORT=ON -D WITH_V4L=ON -D INSTALL_C_EXAMPLES=ON -D INSTALL_PYTHON_EXAMPLES=ON -D BUILD_EXAMPLES=ON -D WITH_QT=ON -D WITH_OPENGL=ON -D WITH_VTK=ON -D CUDA_GENERATION="Pascal" ..
+
+sudo make -j4
+sudo make install
+
+
+## Then in terminal: 
+sudo nano /etc/ld.so.conf.d/opencv.conf
+crtl + O
+crtl + X
+
+# Then in terminal: 
+sudo ldconfig
+
+
+#Then in terminal, open: 
+
+sudo nano /etc/bash.bashrc
+
+# verify if the last line is: 
+
+PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig
+export PKG_CONFIG_PATH
+
+# if not paste and save
+
+
+#echo "Termino todo OK!"
+
+
+
+
+#--------------------------  References ---------------------------------------
+[1] https://medium.com/@mengjiunchiou/build-opencv-caffe-with-cuda-9-0-on-ubuntu-16-04-b2794a41612d
+[2] https://www.samontab.com/web/2014/06/installing-opencv-2-4-9-in-ubuntu-14-04-lts/
+
+
+
